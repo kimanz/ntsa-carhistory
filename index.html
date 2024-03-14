@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Data</title>
+</head>
+<body>
+    <h1>Car Data</h1>
+    <div id="carData"></div>
+
+    <script>
+        // Fetch car data from the server
+        fetch('http://localhost:4000/api/car_data')
+            .then(response => response.json())
+            .then(data => {
+                const carDataElement = document.getElementById('carData');
+                data.cars.forEach(car => {
+                    const carDiv = document.createElement('div');
+                    carDiv.innerHTML = `
+                        <p>ID: ${car.id}</p>
+                        <p>Chassis Number: ${car.chassisNumber}</p>
+                        <p>Make: ${car.make}</p>
+                        <p>Model: ${car.model}</p>
+                        <p>Owner: ${car.owner}</p>
+                        <p>Year: ${car.year}</p>
+                        <p>Mileage: ${car.mileage}</p>
+                        <p>Engine Number: ${car.engineNumber}</p>
+                        <hr>
+                    `;
+                    carDataElement.appendChild(carDiv);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching car data:', error);
+            });
+    </script>
+</body>
+</html>
